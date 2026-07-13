@@ -5,10 +5,16 @@ async function loadTasks() {
   renderTasks(tasks);
 }
 function renderTask(task) {
-  return `<li class="task-item" data-id="${task.id}">
-<span>${task.title}</span>
-</li>`;
-}
+    const priorityClass = `priority-${task.priority || 3}`;
+    return `<li class="task-item" data-id="${task.id}">
+    <span>${task.title}</span>
+    <span class="badge ${priorityClass}">P${task.priority || 3}</span>
+    </li>`;
+    }
+    // inside the form submit handler, add priority to the request body:
+    const priority = document.getElementById("priority").value;
+    body: JSON.stringify({ title, priority }),
+
 function renderTasks(tasks) {
   const list = document.getElementById("task-list");
   list.innerHTML = tasks.map(renderTask).join("");
@@ -34,4 +40,9 @@ document.getElementById("task-form").addEventListener("submit", async (e) => {
   document.getElementById("title").value = "";
   loadTasks();
 });
+<<<<<<< HEAD
+
+document.getElementById("title").value = "";
+=======
+>>>>>>> origin
 loadTasks();
