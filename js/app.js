@@ -6,14 +6,15 @@ async function loadTasks() {
 }
 function renderTask(task) {
     const priorityClass = `priority-${task.priority || 3}`;
-    return `<li class="task-item" data-id="${task.id}">
+    const overdue = task.due_date && new Date(task.due_date) < new Date()
+    && task.status !== "done";
+    return `<li class="task-item ${overdue ? 'overdue' : ''}" data-id="${task.id}">
     <span>${task.title}</span>
     <span class="badge ${priorityClass}">P${task.priority || 3}</span>
+    <span class="due-date">${task.due_date ? "Due " + task.due_date : ""}</span>
     </li>`;
     }
-    // inside the form submit handler, add priority to the request body:
-    const priority = document.getElementById("priority").value;
-    body: JSON.stringify({ title, priority }),
+
 
 function renderTasks(tasks) {
   const list = document.getElementById("task-list");
@@ -31,6 +32,7 @@ document.getElementById("search").addEventListener("input", async (e) => {
 
 document.getElementById("task-form").addEventListener("submit", async (e) => {
   e.preventDefault();
+  
   const title = document.getElementById("title").value;
   await fetch(`${API_URL}?action=add`, {
     method: "POST",
@@ -38,11 +40,11 @@ document.getElementById("task-form").addEventListener("submit", async (e) => {
     body: JSON.stringify({ title }),
   });
   document.getElementById("title").value = "";
+      // inside the form submit handler, add priority to the request body:
+      const priority = document.getElementById("priority").value;
+      body: JSON.stringify({ title, priority }),
   loadTasks();
 });
-<<<<<<< HEAD
 
 document.getElementById("title").value = "";
-=======
->>>>>>> origin
 loadTasks();
