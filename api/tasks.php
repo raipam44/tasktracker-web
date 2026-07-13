@@ -7,6 +7,7 @@ function loadTasks($dataFile)
         return [];
     return json_decode(file_get_contents($dataFile), true);
 }
+//hi
 function saveTasks($dataFile, $tasks)
 {
     file_put_contents($dataFile, json_encode($tasks, JSON_PRETTY_PRINT));
